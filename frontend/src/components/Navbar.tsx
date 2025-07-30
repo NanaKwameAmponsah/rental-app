@@ -40,12 +40,21 @@ const Navbar = () => {
                 <div className='flex items-center gap-5'>
                     <Link href= "/signin">
                         <Button variant="outline"
-                            className='text-white border-white bg-transparent hover:bg-white hover:text-primary-700 rounded-lg'>Sign In</Button>
+                            className='text-white border-white bg-transparent hover:bg-white hover:text-primary-700 rounded-lg'
+                            >
+                                Sign In
+                            </Button>
                     </Link>
+                    <Link href="/signup">
+                        <Button variant="outline"
+                            className='text-white bg-secondary-500 hover:bg-secondary-600 rounded-lg'>
+                                Sign up
+                            </Button>
+                            </Link>
                 </div>
         </div>
     </div>;
-  
+
 };
 
 export default Navbar;
