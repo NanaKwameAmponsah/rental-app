@@ -3,6 +3,7 @@ import HeroSection from './HeroSection';
 import FeatureSection from './FeatureSection';
 import DiscoverSection from './DiscoverSection';
 import CallToActionSection from './CallToActionSection';
+import FooterSection from './FooterSection';
 
 const Landing = () => {
   return <div>
@@ -10,6 +11,7 @@ const Landing = () => {
     <FeatureSection/>
     <DiscoverSection/>
     <CallToActionSection/>
+    <FooterSection/>
     </div>
 };
 
