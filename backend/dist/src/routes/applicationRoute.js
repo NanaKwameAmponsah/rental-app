@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const authMiddleware_1 = require("../middleware/authMiddleware");
+const authMiddleware_1 = require("../Middleware/authMiddleware");
 const applicationControllers_1 = require("../controllers/applicationControllers");
 const router = express_1.default.Router();
 router.post("/", (0, authMiddleware_1.authMiddleware)(["tenant"]), applicationControllers_1.createApplication);
