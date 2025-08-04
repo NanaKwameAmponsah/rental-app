@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "real-estate",
+      name: "rental-app",
       script: "npm",
       args: "run dev",
       env: {
