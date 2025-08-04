@@ -1,8 +1,9 @@
 "use client";
 import React from 'react'
 import { motion } from 'framer-motion';
-import { tr } from 'zod/v4/locales';
+import Image from 'next/image';
 import Link from 'next/link';
+
 
 const containerVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -71,11 +72,11 @@ const FeatureCard = ({
 }) =>  (
     <div className='text-center'>
         <div className='p-4 rounded-lg mb-4 flex items-center justify-center h-48'>
-            <img 
+            <Image
             src={imageSrc} 
             width={400} 
             height={400} 
-            className='h-full w-full object-contain'
+            className='w-full h-full object-contain'
              alt={title} />
 
         </div>
