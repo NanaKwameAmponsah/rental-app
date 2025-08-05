@@ -4,13 +4,13 @@ import Navbar from "@/components/Navbar";
 import { NAVBAR_HEIGHT } from "@/lib/constants";
 import { useGetAuthUserQuery } from "@/state/api";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { data: authUser } = useGetAuthUserQuery();
+  const { data: authUser, isLoading: authLoading } = useGetAuthUserQuery();
   const router = useRouter();
   const pathname = usePathname();
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     // Only redirect if user is authenticated and trying to access certain paths
     if (authUser) {
@@ -21,8 +21,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       ) {
         router.push("/managers/properties", { scroll: false });
       }
+      else{
+        setIsLoading(false);
+      }
     }
   }, [authUser, router, pathname]);
+  if (authLoading || isLoading) return <>Loading...</>;
 
   return (
     <div className="h-full w-full">

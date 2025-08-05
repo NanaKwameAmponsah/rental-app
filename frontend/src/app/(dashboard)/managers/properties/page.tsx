@@ -17,7 +17,11 @@ const Properties = () => {
   });
 
   if (isLoading) return <Loading />;
-  if (error) return <div>Error loading manager properties</div>;
+  if (error) {
+    console.error("Manager properties error:", error);
+    const errorMessage = 'error' in error ? error.error : ('status' in error ? JSON.stringify(error.data ?? 'Unknown error') : 'Unknown error');
+    return <div>Error loading manager properties: {errorMessage}</div>;
+  }
 
   return (
     <div className="dashboard-container">
