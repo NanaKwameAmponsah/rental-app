@@ -43,7 +43,7 @@ const PropertyLocation = ({ propertyId }: PropertyDetailsProps) => {
 
   if (isLoading) return <>Loading...</>;
   if (isError || !property) {
-    return <>nFound</>;
+    return <>Property Not Found</>;
   }
 
   return (
