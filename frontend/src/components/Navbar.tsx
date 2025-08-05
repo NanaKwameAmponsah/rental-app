@@ -59,7 +59,7 @@ const Navbar = () => {
               />
               <div className="text-xl font-bold">
                 HOME
-                <span className="text-secondary-500 font-light hover:!text-primary-300">
+                <span className="text-blue-500 font-light hover:!text-primary-300">
                   IFY
                 </span>
               </div>
@@ -170,7 +170,7 @@ const Navbar = () => {
               <Link href="/signup">
                 <Button
                   variant="secondary"
-                  className="text-white bg-secondary-600 hover:bg-white hover:text-primary-700 rounded-lg"
+                  className="text-white bg-blue-600 hover:bg-white hover:text-primary-700 rounded-lg"
                 >
                   Sign Up
                 </Button>

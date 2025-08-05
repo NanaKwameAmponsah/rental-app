@@ -57,7 +57,9 @@ const FooterSection = () => {
               <FontAwesomeIcon icon={faTwitter} className="h-6 w-6" />
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/nana-kwame-amponsah/"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Linkedin"
               className="hover:text-primary-600"
             >

@@ -3,7 +3,9 @@ import React from 'react'
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { toggleFiltersFullOpen } from '@/state';
 
 const containerVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -22,6 +24,22 @@ const itemVariants = {
 };
 
 const FeatureSection = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+const handleSearchClick = () => {
+    router.push('/search');
+};
+
+  const handleDiscoverClick = () => {
+      dispatch(toggleFiltersFullOpen());
+      router.push('/search');
+  };
+
+  const handleExploreClick = () => {
+      console.log('Explore clicked'); 
+  };
+
   return (<motion.div
     initial="hidden"
     whileInView="visible"
@@ -38,19 +56,35 @@ const FeatureSection = () => {
             Want to narrow down your search? Use our search filters!
         </motion.h2>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 xl:gap-16'>
-            {[0,1,2].map((index) => (
+            {[
+                {
+                    imageSrc: '/landing-search3.png',
+                    title: 'Verified Listings',
+                    description: 'Discover the best rental options with user reviews and ratings',
+                    linkText: 'Explore',
+                    onClick: handleExploreClick  // Changed from href to onClick
+                },
+                {
+                    imageSrc: '/landing-search2.png',
+                    title: 'Browse Rental Listings with Ease',
+                    description: 'Get access to user reviews and ratings for a better understanding of rental options',
+                    linkText: 'Search',
+                    onClick: handleSearchClick  // Changed from href to onClick
+                },
+                {
+                    imageSrc: '/landing-search1.png',
+                    title: 'Simplify Your Rental Search with Advanced Search',
+                    description: 'Find trustworthy and verified rental listings to ensure a hassle-free experience.',
+                    linkText: 'Discover',
+                    onClick: handleDiscoverClick
+                }
+            ].map((card, index) => (
                 <motion.div
                     key={index}
-                    variants={itemVariants}>
-                        <FeatureCard 
-                            imageSrc={`/landing-search${3-index}.png`}
-                            title={[ 'Verified Listings', 'Browse Rental Listings with Ease', 'Simplify Your Rental Search with Advanced Search'][index]
-
-                            }
-                            description={[ 'Discover the best rental options with user reviews and ratings', 'Get access to user reviews and ratings for a better understanding of rental options', 'Find trustworthy and verified rental listings to ensure a hassle-free experience.'][index]}
-                            linkText={['Explore', 'Search', 'Discover'][index]}
-                            linkHref={['/explore', '/search', '/discover'][index]} />
-                    </motion.div>
+                    variants={itemVariants}
+                >
+                    <FeatureCard {...card} />
+                </motion.div>
             ))}
         </div>
     </div>
@@ -63,12 +97,14 @@ const FeatureCard = ({
     description,
     linkText,
     linkHref,
+    onClick
 }:{
     imageSrc: string;
     title: string;
     description: string;
     linkText: string;
-    linkHref: string;
+    linkHref?: string;
+    onClick?: () => void;
 }) =>  (
     <div className='text-center'>
         <div className='p-4 rounded-lg mb-4 flex items-center justify-center h-48'>
@@ -82,14 +118,22 @@ const FeatureCard = ({
         </div>
         <h3 className='text-xl font-semibold mb-2'>{title}</h3>
         <p className='mb-4'>{description}</p>
-        <Link
-            href={linkHref}
-            className='inline-block border border-gray-300 rounded px-4 py-2 hover:bg-gray-100'
-            scroll={false}
-
-        >
-        {linkText}
-        </Link>
+        {onClick ? (
+            <button
+                onClick={onClick}
+                className='inline-block border border-gray-300 rounded px-4 py-2 hover:bg-gray-100'
+            >
+                {linkText}
+            </button>
+        ) : (
+            <Link
+                href={linkHref || '#'}
+                className='inline-block border border-gray-300 rounded px-4 py-2 hover:bg-gray-100'
+                scroll={false}
+            >
+                {linkText}
+            </Link>
+        )}
 
     </div>
   );
