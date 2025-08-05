@@ -4,8 +4,22 @@ import Image from 'next/image';
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useGetAuthUserQuery } from '@/state/api';
+import { toast } from 'sonner';
 
 const CallToActionSection = () => {
+  const router = useRouter();
+  const { data: authUser } = useGetAuthUserQuery();
+
+  const handleSignUpClick = () => {
+    if (authUser) {
+      toast.info('You are already signed in!');
+      return;
+    }
+    router.push('/signup');
+  };
+
   return (
     <div className="relative py-24">
       <Image
@@ -40,13 +54,12 @@ const CallToActionSection = () => {
               >
                 Search
               </button>
-              <Link
-                href="/signup"
-                className="inline-block text-white bg-secondary-500 rounded-lg px-6 py-3 font-semibold hover:bg-secondary-600"
-                scroll={false}
+              <button
+                onClick={handleSignUpClick}
+                className="inline-block text-white bg-blue-600 rounded-lg px-6 py-3 font-semibold hover:bg-blue-700"
               >
                 Sign Up
-              </Link>
+              </button>
             </div>
           </div>
         </div>

@@ -7,23 +7,30 @@ import { Button } from '@/components/ui/button';
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { setFilters } from "@/state";
+import { useGetAuthUserQuery } from '@/state/api';
+import { toast } from 'sonner';
 
 const HeroSection = () => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
+  const { data: authUser } = useGetAuthUserQuery();
 
   const handleLocationSearch = async () => {
     try {
       const trimmedQuery = searchQuery.trim();
       if (!trimmedQuery) return;
 
+      if (!authUser) {
+        toast.info('Please sign in to view properties');
+        router.push('/signin');
+        return;
+      }
+
       const response = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
           trimmedQuery
-        )}.json?access_token=${
-          process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
-        }&fuzzyMatch=true`
+        )}.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}&fuzzyMatch=true`
       );
       const data = await response.json();
       if (data.features && data.features.length > 0) {
@@ -31,13 +38,13 @@ const HeroSection = () => {
         dispatch(
           setFilters({
             location: trimmedQuery,
-            coordinates: [lat, lng],
+            coordinates: [lng, lat],
           })
         );
         const params = new URLSearchParams({
           location: trimmedQuery,
           lat: lat.toString(),
-          lng: lng,
+          lng: lng.toString(),
         });
         router.push(`/search?${params.toString()}`);
       }
@@ -81,7 +88,7 @@ const HeroSection = () => {
                         />
                         <Button
                             onClick={handleLocationSearch}
-                            className='bg-secondary-500 text-white rounded-none rounded-r-xl border-none hover:bg-secondary-600 h-12'
+                            className='bg-blue-600 text-white rounded-none rounded-r-xl border-none hover:bg-blue-700 h-12'
                         >
                             Search
 
